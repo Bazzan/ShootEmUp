@@ -1,57 +1,79 @@
-﻿using System.Collections;
-using System.Xml.Schema;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class HandGun : MonoBehaviour, IWeapon
 {
 
     public float Damage;
     public float Range;
+    public float SecondsToShoot;
     public float spreadDegrees;
     public LayerMask layerMask;
     public LineRenderer lineRenderer;
 
-
+    private float coolDownTimer;
     private Transform playerTransform;
     private Vector3 spread;
     private RaycastHit rayHit;
-    private Vector3 [] lineRendererPositions = new Vector3 [2] ;
+    private Vector3[] lineRendererPositions = new Vector3[2];
+    private PlayerInputManager inputManager;
 
-
+    private Vector3 lineRenderhitPos;
 
     // TODO : gör så att hand gun är nice och skjuter rakt
 
     private void Start()
     {
         playerTransform = GameManager.instance.PlayerTransform;
+
+
     }
 
 
-
-    private void Update()
+    private void OnEnable()
     {
-        if (PlayerInputManager.inputActions.Player.Fire.triggered)
-        {
-            Shoot();
-        }
+        PlayerInputManager.shootDelegate = Shoot;
     }
+
+
+    private void OnDisable()
+    {
+        PlayerInputManager.shootDelegate -= Shoot;
+    }
+
+
+
+
     public void Shoot()
     {
+        if (Time.time < coolDownTimer) return;
 
-        spread.y = Random.Range(-spreadDegrees, spreadDegrees);
-        
-        if(Physics.Raycast(playerTransform.position,playerTransform.forward , out rayHit,Range,layerMask, QueryTriggerInteraction.Ignore))
+
+        //spread.y = Random.Range(-spreadDegrees, spreadDegrees);
+
+        if (Physics.Raycast(playerTransform.position, playerTransform.forward, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
         {
-            lineRendererPositions[0] = playerTransform.position;
-            lineRendererPositions[1] = rayHit.point;
-            lineRenderer.SetPositions(lineRendererPositions);
-
-            StartCoroutine(Line());
+            lineRenderhitPos = rayHit.point;
+        }
+        else
+        {
+            lineRenderhitPos = playerTransform.forward  * 10;
         }
 
+        LineRendererEffect(lineRenderhitPos);
+        coolDownTimer = Time.time + SecondsToShoot;
 
 
+    }
 
+    private void LineRendererEffect(Vector3 hitPosition)
+    {
+        lineRendererPositions[0] = playerTransform.position;
+        lineRendererPositions[1] = hitPosition;
+        lineRenderer.SetPositions(lineRendererPositions);
+
+        StartCoroutine(Line());
     }
 
     IEnumerator Line()
