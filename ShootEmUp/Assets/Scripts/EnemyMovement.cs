@@ -8,15 +8,26 @@ public class EnemyMovement : MonoBehaviour
     private NavMeshAgent agent;
     private Transform agentTransform;
     private Transform playerTransform;
-    
+    private Collider enemyCollider;
+
     private void Awake()
     {
         
         agent = GetComponent<NavMeshAgent>();
         agentTransform = agent.transform;
         playerTransform = GameManager.instance.PlayerTransform;
-    
+        enemyCollider = GetComponentInChildren<Collider>();
+
+
+        foreach  (Collider collider in GameManager.instance.BoarderColliders)
+        {
+            Physics.IgnoreCollision(enemyCollider, collider);
+        }
+        
+
     }
+
+
 
     private void Start()
     {
@@ -25,6 +36,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnSpawn()
     {
+        
         StartCoroutine(CalcPath());
     }
 

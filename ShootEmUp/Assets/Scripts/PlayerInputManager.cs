@@ -1,7 +1,4 @@
-﻿
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {

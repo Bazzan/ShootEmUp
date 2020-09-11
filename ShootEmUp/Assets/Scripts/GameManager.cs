@@ -8,14 +8,18 @@ public class GameManager : MonoBehaviour
     public Camera PlayerCamera;
     public Transform PlayerCameraTransform;
     public Transform PlayerTransform;
-
+    public Collider[] BoarderColliders;
     public static GameManager instance = null;
 
 
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance != null)
+        {
+
+        }
+        else
         {
             instance = this;
         }

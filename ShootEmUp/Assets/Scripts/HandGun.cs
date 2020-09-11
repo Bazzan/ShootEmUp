@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 public class HandGun : MonoBehaviour, IWeapon
 {
 
@@ -12,13 +10,16 @@ public class HandGun : MonoBehaviour, IWeapon
     public LayerMask layerMask;
     public LineRenderer lineRenderer;
 
+
+    private bool isShooting;
     private float coolDownTimer;
+    private float lineRendererTimer;
     private Transform playerTransform;
     private Vector3 spread;
     private RaycastHit rayHit;
     private Vector3[] lineRendererPositions = new Vector3[2];
     private PlayerInputManager inputManager;
-
+    private ParticleSystem shootVFX;
     private Vector3 lineRenderhitPos;
 
     // TODO : gör så att hand gun är nice och skjuter rakt
@@ -26,7 +27,9 @@ public class HandGun : MonoBehaviour, IWeapon
     private void Start()
     {
         playerTransform = GameManager.instance.PlayerTransform;
-
+        isShooting = false;
+        shootVFX = GetComponentInChildren<ParticleSystem>();
+        coolDownTimer = 0f;
 
     }
 
@@ -56,10 +59,6 @@ public class HandGun : MonoBehaviour, IWeapon
         {
             lineRenderhitPos = rayHit.point;
         }
-        else
-        {
-            lineRenderhitPos = playerTransform.forward  * 10;
-        }
 
         LineRendererEffect(lineRenderhitPos);
         coolDownTimer = Time.time + SecondsToShoot;
@@ -84,7 +83,6 @@ public class HandGun : MonoBehaviour, IWeapon
 
         lineRenderer.enabled = false;
     }
-
 
 
 }
