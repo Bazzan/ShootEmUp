@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4270104683583539282}
   - component: {fileID: 4270104683583539287}
   - component: {fileID: 4270104683583539284}
-  - component: {fileID: 4270104683583539285}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4270104683583539285
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4270104683583539283}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4270104683798220589
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +92,8 @@ GameObject:
   - component: {fileID: 4270104683798220590}
   - component: {fileID: 4270104683798220591}
   - component: {fileID: 4270104683798220588}
+  - component: {fileID: 344846433}
+  - component: {fileID: 344846432}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -162,3 +150,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81d30654e0a01c418a90e2cedde245b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &344846433
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270104683798220589}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &344846432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270104683798220589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df1bf81f9aa0ff4b86bb3b1a1f2f3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
+  Speed: 0
+  Damage: 0

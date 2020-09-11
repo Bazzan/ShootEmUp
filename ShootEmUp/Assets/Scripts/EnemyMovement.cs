@@ -16,7 +16,7 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agentTransform = agent.transform;
         playerTransform = GameManager.instance.PlayerTransform;
-        enemyCollider = GetComponentInChildren<Collider>();
+        enemyCollider = GetComponent<Collider>();
 
 
         foreach  (Collider collider in GameManager.instance.BoarderColliders)
@@ -43,7 +43,7 @@ public class EnemyMovement : MonoBehaviour
     private IEnumerator CalcPath()
     {
         agent.SetDestination(playerTransform.position);
-        Debug.Log("setDestination");
+
         yield return new WaitForSeconds(0.75f);
 
         StartCoroutine(CalcPath());
