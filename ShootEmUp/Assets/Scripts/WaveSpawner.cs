@@ -44,7 +44,7 @@ public class WaveSpawner : MonoBehaviour
     private void UpdateWave()
     {
         NumberOfEnemies = Mathf.RoundToInt( NumberOfEnemies * IncreaseNumberOfEnemiesBetweenWaves);
-        
+        GameManager.instance.CurrentZombieHealth *= GameManager.instance.healthScaling;
     }
 
     IEnumerator BetweenWaves()

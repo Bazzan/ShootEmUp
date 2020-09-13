@@ -58,6 +58,7 @@ public class HandGun : MonoBehaviour, IWeapon
         if (Physics.Raycast(playerTransform.position, playerTransform.forward, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderhitPos = rayHit.point;
+            rayHit.collider.GetComponent<EnemyAttribute>().TakeDamage(Damage);
         }
 
         LineRendererEffect(lineRenderhitPos);
