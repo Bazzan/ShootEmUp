@@ -34,10 +34,15 @@ public class EnemyMovement : MonoBehaviour
         OnSpawn();
     }
 
-    private void OnSpawn()
+    public void OnSpawn()
     {
         
         StartCoroutine(CalcPath());
+    }
+
+    public void StaggerEnemy()
+    {
+        agent.velocity = Vector3.zero;
     }
 
     private IEnumerator CalcPath()

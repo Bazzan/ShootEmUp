@@ -6,7 +6,7 @@ public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private Transform poolLocation;
     private Dictionary<string, Queue<GameObject>> PoolDictionary;
-    [SerializeField] private List<Pool> Pools;
+    [SerializeField] private List<Pool> Pools = default;
 
     [System.Serializable]
     public class Pool

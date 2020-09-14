@@ -12,7 +12,7 @@ public class WaveSpawner : MonoBehaviour
     public Transform[] spawnTransforms;
 
     private int randomSpawnPoint;
-
+    private GameObject enemyGO;
     private void Start()
     {
         StartCoroutine(Init());
@@ -31,8 +31,8 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < NumberOfEnemies; i++)
         {
             randomSpawnPoint = Random.Range(0, 3);
-            instance.SpawnFromPool("Zombie", spawnTransforms[randomSpawnPoint].position, Quaternion.identity);
-
+            enemyGO = instance.SpawnFromPool("Zombie", spawnTransforms[randomSpawnPoint].position, Quaternion.identity);
+            enemyGO.GetComponent<EnemyMovement>().OnSpawn();
             yield return new WaitForSeconds(1f);
         }
 

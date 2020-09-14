@@ -1,31 +1,39 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-public class HandGun : MonoBehaviour, IWeapon
-{
 
+public class UziGun : MonoBehaviour, IWeapon
+{
     public float Damage;
     public float Range;
     public float SecondsToShoot;
+    public float spreadDegrees;
     public LayerMask layerMask;
     public LineRenderer lineRenderer;
+    public float spreadAngel;
 
 
 
+    private bool isShooting;
     private float coolDownTimer;
-    private Transform playerTransform;
+
+    private float randomSpreadDirection;
+    public Vector3 shotDirection;
+
+    private Quaternion spreadQuaternion;
+
     private RaycastHit rayHit;
     private Vector3[] lineRendererPositions = new Vector3[2];
     private Vector3 lineRenderhitPos;
-
-    // TODO : gör så att hand gun är nice och skjuter rakt
+    private Transform playerTransform;
+    
 
     private void Awake()
     {
         playerTransform = GameManager.instance.PlayerTransform;
         coolDownTimer = 0f;
-
+        
     }
-
 
     private void OnEnable()
     {
@@ -40,12 +48,17 @@ public class HandGun : MonoBehaviour, IWeapon
 
 
 
-
     public void Shoot()
     {
         if (Time.time < coolDownTimer) return;
+        randomSpreadDirection = Random.Range(-spreadAngel, spreadAngel);
+        spreadQuaternion = transform.rotation;
+        shotDirection = transform.forward;
+        shotDirection.x += randomSpreadDirection;
+        shotDirection.z += randomSpreadDirection;
+        shotDirection = shotDirection.normalized;
 
-        if (Physics.Raycast(playerTransform.position, playerTransform.forward, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(playerTransform.position, shotDirection, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderhitPos = rayHit.point;
             if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
@@ -55,9 +68,11 @@ public class HandGun : MonoBehaviour, IWeapon
         }
 
         LineRendererEffect(lineRenderhitPos);
-        coolDownTimer = Time.time + SecondsToShoot;
-    }
 
+
+        coolDownTimer = Time.time + SecondsToShoot;
+
+    }
 
 
     private void LineRendererEffect(Vector3 hitPosition)
@@ -78,5 +93,9 @@ public class HandGun : MonoBehaviour, IWeapon
         lineRenderer.enabled = false;
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, shotDirection * 50);
+    }
 }

@@ -1,22 +1,24 @@
 ﻿
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttribute : MonoBehaviour, IKillabel
 {
-    public string PoolTag;
+    public string PoolTag = "Zombie";
+    public Material hitMaterial;
 
-
+    private EnemyMovement enemyMovement;
+    private MeshRenderer meshRenderer;
+    private Material material;
 
     private float health;
-
-    private Material material;
 
 
     private void Awake()
     {
-        material = GetComponent<Material>();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        material = meshRenderer.sharedMaterial;
+        enemyMovement = GetComponent<EnemyMovement>();
     }
     private void OnEnable()
     {
@@ -26,34 +28,33 @@ public class EnemyAttribute : MonoBehaviour, IKillabel
 
     public void Die()
     {
-        ObjectPool.Instance.EnQueueInPool(PoolTag, gameObject);
 
-
+        ObjectPool.Instance.EnQueueInPool("Zombie", gameObject);
     }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        enemyMovement.StaggerEnemy();
+
         if (health <= 0f)
         {
             Die();
-
-
+            return;
         }
-
-
-
+        
+        StartCoroutine(HitVFX());
     }
 
     IEnumerator HitVFX()
     {
-        Material oldMaterial = material;
-        material.color = Color.red;
+
+        meshRenderer.sharedMaterial = hitMaterial;
+
         yield return new WaitForSeconds(0.2f);
-        material.color = oldMaterial.color;
 
+        meshRenderer.sharedMaterial = material;
     }
-
 
 
 }
