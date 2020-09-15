@@ -41,6 +41,22 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""WeaponSwitchers"",
+                    ""type"": ""Button"",
+                    ""id"": ""0fc741fe-131a-4cc1-9637-6baa852b52d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""scoll"",
+                    ""type"": ""Value"",
+                    ""id"": ""083579e0-21a4-48e2-84a9-bf02e9269445"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -261,6 +277,39 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""060bb940-93af-42ca-b506-d6121d7d11a7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""WeaponSwitchers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c833e6e-4097-4e88-95e5-a24df39517fa"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""WeaponSwitchers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0e29b63-8e8e-4340-8485-6e5ade42dd60"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""scoll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -841,6 +890,8 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_WeaponSwitchers = m_Player.FindAction("WeaponSwitchers", throwIfNotFound: true);
+        m_Player_scoll = m_Player.FindAction("scoll", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -905,6 +956,8 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_WeaponSwitchers;
+    private readonly InputAction m_Player_scoll;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -912,6 +965,8 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @WeaponSwitchers => m_Wrapper.m_Player_WeaponSwitchers;
+        public InputAction @scoll => m_Wrapper.m_Player_scoll;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -930,6 +985,12 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @WeaponSwitchers.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeaponSwitchers;
+                @WeaponSwitchers.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeaponSwitchers;
+                @WeaponSwitchers.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeaponSwitchers;
+                @scoll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoll;
+                @scoll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoll;
+                @scoll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoll;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -943,6 +1004,12 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @WeaponSwitchers.started += instance.OnWeaponSwitchers;
+                @WeaponSwitchers.performed += instance.OnWeaponSwitchers;
+                @WeaponSwitchers.canceled += instance.OnWeaponSwitchers;
+                @scoll.started += instance.OnScoll;
+                @scoll.performed += instance.OnScoll;
+                @scoll.canceled += instance.OnScoll;
             }
         }
     }
@@ -1102,6 +1169,8 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnWeaponSwitchers(InputAction.CallbackContext context);
+        void OnScoll(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -54,7 +54,6 @@ public class HandGun : MonoBehaviour, IWeapon
             lineRenderhitPos = rayHit.point;
             if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
             {
-
                 enemyAttribute.TakeDamage(Damage);
             }
         }
