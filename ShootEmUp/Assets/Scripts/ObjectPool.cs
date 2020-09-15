@@ -48,6 +48,10 @@ public class ObjectPool : MonoBehaviour
 
         foreach (Pool pool in Pools)
         {
+            if (PoolDictionary.ContainsKey(pool.PoolTag))
+            {
+                Debug.LogError("poolDictionary cant contain two of the same keys " + pool.PoolTag);
+            }
             Queue<GameObject> queuePool = new Queue<GameObject>();
 
             for (int i = 0; i < pool.PoolSize; i++)

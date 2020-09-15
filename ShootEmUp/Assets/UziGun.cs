@@ -7,26 +7,18 @@ public class UziGun : MonoBehaviour, IWeapon
     public float Damage;
     public float Range;
     public float SecondsToShoot;
-    public float spreadDegrees;
-    public LayerMask layerMask;
-    public LineRenderer lineRenderer;
-    public float spreadAngel;
+    public LayerMask LayerMask;
+    public LineRenderer LineRenderer;
+    public float SpreadAmount;
 
 
-
-    private bool isShooting;
     private float coolDownTimer;
-
-    private float randomSpreadDirection;
-    public Vector3 shotDirection;
-
-    private Quaternion spreadQuaternion;
-
+    private Vector3 shotDirection;
     private RaycastHit rayHit;
     private Vector3[] lineRendererPositions = new Vector3[2];
     private Vector3 lineRenderhitPos;
     private Transform playerTransform;
-    
+    Ray ray;
 
     private void Awake()
     {
@@ -51,51 +43,69 @@ public class UziGun : MonoBehaviour, IWeapon
     public void Shoot()
     {
         if (Time.time < coolDownTimer) return;
-        randomSpreadDirection = Random.Range(-spreadAngel, spreadAngel);
-        spreadQuaternion = transform.rotation;
-        shotDirection = transform.forward;
-        shotDirection.x += randomSpreadDirection;
-        shotDirection.z += randomSpreadDirection;
-        shotDirection = shotDirection.normalized;
 
-        if (Physics.Raycast(playerTransform.position, shotDirection, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
+
+        ray.origin = transform.position;
+        ray.direction = GetSpreadDirection();
+
+        //shotDirection = GetSpreadDirection();
+        //if (Physics.Raycast(playerTransform.position, shotDirection, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out rayHit, Range, LayerMask, QueryTriggerInteraction.Ignore))
         {
-            lineRenderhitPos = rayHit.point;
+                lineRenderhitPos = rayHit.point;
+            Debug.Log("hit");
             if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
             {
+
                 enemyAttribute.TakeDamage(Damage);
             }
         }
+        else
+        {
+            lineRenderhitPos = ray.GetPoint(Range);
+        }
 
         LineRendererEffect(lineRenderhitPos);
-
+        Debug.Log("line");
 
         coolDownTimer = Time.time + SecondsToShoot;
 
     }
+
+    private Vector3 GetSpreadDirection()
+    {
+
+        float Spread = Random.Range(-SpreadAmount, SpreadAmount);
+
+        Vector3 dir = transform.forward;
+        dir.x += Spread;
+        dir.z += Spread;
+        return dir;
+    }
+
 
 
     private void LineRendererEffect(Vector3 hitPosition)
     {
         lineRendererPositions[0] = playerTransform.position;
         lineRendererPositions[1] = hitPosition;
-        lineRenderer.SetPositions(lineRendererPositions);
+        LineRenderer.SetPositions(lineRendererPositions);
 
         StartCoroutine(Line());
     }
 
     IEnumerator Line()
     {
-        lineRenderer.enabled = true;
+        LineRenderer.enabled = true;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
-        lineRenderer.enabled = false;
+        LineRenderer.enabled = false;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, shotDirection * 50);
+        Gizmos.DrawRay(transform.position, shotDirection * Range);
     }
 }

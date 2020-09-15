@@ -16,14 +16,14 @@ public class HandGun : MonoBehaviour, IWeapon
     private RaycastHit rayHit;
     private Vector3[] lineRendererPositions = new Vector3[2];
     private Vector3 lineRenderhitPos;
-
+    private Ray ray;
     // TODO : gör så att hand gun är nice och skjuter rakt
-
+    private Transform weaponTransform;
     private void Awake()
     {
         playerTransform = GameManager.instance.PlayerTransform;
         coolDownTimer = 0f;
-
+        weaponTransform = transform;
     }
 
 
@@ -45,15 +45,24 @@ public class HandGun : MonoBehaviour, IWeapon
     {
         if (Time.time < coolDownTimer) return;
 
-        if (Physics.Raycast(playerTransform.position, playerTransform.forward, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
+        ray.origin = weaponTransform.position;
+        ray.direction = weaponTransform.forward;
+
+        if (Physics.Raycast(ray, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
         {
+            Debug.Log("hit");
             lineRenderhitPos = rayHit.point;
             if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
             {
+
                 enemyAttribute.TakeDamage(Damage);
             }
         }
+        else
+        {
+            lineRenderhitPos = ray.GetPoint(Range);
 
+        }
         LineRendererEffect(lineRenderhitPos);
         coolDownTimer = Time.time + SecondsToShoot;
     }
