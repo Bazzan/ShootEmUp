@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
 
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private Transform agentTransform;
     private Transform playerTransform;
     private Collider enemyCollider;
@@ -49,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
     {
         agent.SetDestination(playerTransform.position);
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.3f);
 
         StartCoroutine(CalcPath());
 

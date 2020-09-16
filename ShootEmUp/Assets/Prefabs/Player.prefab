@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 816499173}
   - component: {fileID: 816499172}
   - component: {fileID: 816499171}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Uzi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 746b811245ed6b44f97bea8fec931c12, type: 2}
+  - {fileID: 2100000, guid: 58e0d5d09b4ea0c4bb33df0a7eb90303, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,7 +112,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5921923109344827787}
-  m_Layer: 0
+  - component: {fileID: 1827027461}
+  m_Layer: 11
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +136,18 @@ Transform:
   m_Father: {fileID: 5355873759237320381}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1827027461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169339792388037729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed3f11b6d6909f468eec75a08e65edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &643898203
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -245,7 +258,9 @@ GameObject:
   - component: {fileID: 5355873759237320383}
   - component: {fileID: 5355873759237320380}
   - component: {fileID: 5355873759237320378}
-  m_Layer: 0
+  - component: {fileID: 847329820}
+  - component: {fileID: 847329819}
+  m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,9 +331,9 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 873244296}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HandGun, Assembly-CSharp
-        m_MethodName: Shoot
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -370,6 +385,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4a2ccc41-5bd2-4b96-9152-0e1644afa3c0
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0fc741fe-131a-4cc1-9637-6baa852b52d5
+    m_ActionName: Player/WeaponSwitchers[/Keyboard/1,/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 083579e0-21a4-48e2-84a9-bf02e9269445
+    m_ActionName: Player/scoll[/Mouse/scroll]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -387,7 +422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9115bcaa218e2434088298d9050382e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 20
+  maxSpeed: 4
 --- !u!54 &5355873759237320378
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -404,6 +440,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!136 &847329820
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5355873759237320379}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &847329819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5355873759237320379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6c9c0df5f582945895c130f2b29a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 100
 --- !u!1 &5355873759436167081
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,8 +478,7 @@ GameObject:
   - component: {fileID: 5355873759436167080}
   - component: {fileID: 5355873759436167085}
   - component: {fileID: 5355873759436167082}
-  - component: {fileID: 5355873759436167083}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,20 +548,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5355873759436167083
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5355873759436167081}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!120 &766919870
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -610,7 +658,7 @@ GameObject:
   - component: {fileID: 6193662140209299631}
   - component: {fileID: 4876636531314118781}
   - component: {fileID: 873244296}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HandGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,6 +815,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandGunVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 8129997806912524614, guid: 148d594b7e54b2e42aacd1789a9a598b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6895727727545960458, guid: 148d594b7e54b2e42aacd1789a9a598b, type: 3}
     - {fileID: 5796042537601654712, guid: 148d594b7e54b2e42aacd1789a9a598b, type: 3}
@@ -849,6 +902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HandGunVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129997806912524614, guid: 148d594b7e54b2e42aacd1789a9a598b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5796042537601654712, guid: 148d594b7e54b2e42aacd1789a9a598b, type: 3}

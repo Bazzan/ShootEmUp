@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 4270104683798220588}
   - component: {fileID: 344846432}
   - component: {fileID: 344846433}
+  - component: {fileID: 2144550512}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -150,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81d30654e0a01c418a90e2cedde245b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
 --- !u!114 &344846432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2df1bf81f9aa0ff4b86bb3b1a1f2f3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolTag: 
+  PoolTag: Zombie
   hitMaterial: {fileID: 2100000, guid: 3c9ce652521b8f84fb83e7ef102868fc, type: 2}
 --- !u!65 &344846433
 BoxCollider:
@@ -177,3 +179,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2144550512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270104683798220589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac4ad0c30e0ec44a904369f4a2384b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 20
+  pushBackForce: 3
+  timeToHit: 0.3
+  timeBetweenPathCalc: 0.2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2048

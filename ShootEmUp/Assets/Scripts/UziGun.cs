@@ -24,7 +24,7 @@ public class UziGun : MonoBehaviour, IWeapon
     {
         playerTransform = GameManager.instance.PlayerTransform;
         coolDownTimer = 0f;
-        
+
     }
 
     private void OnEnable()
@@ -52,8 +52,7 @@ public class UziGun : MonoBehaviour, IWeapon
         //if (Physics.Raycast(playerTransform.position, shotDirection, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
         if (Physics.Raycast(ray, out rayHit, Range, LayerMask, QueryTriggerInteraction.Ignore))
         {
-                lineRenderhitPos = rayHit.point;
-            Debug.Log("hit");
+            lineRenderhitPos = rayHit.point;
             if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
             {
 
@@ -66,7 +65,7 @@ public class UziGun : MonoBehaviour, IWeapon
         }
 
         LineRendererEffect(lineRenderhitPos);
-        Debug.Log("line");
+
 
         coolDownTimer = Time.time + SecondsToShoot;
 

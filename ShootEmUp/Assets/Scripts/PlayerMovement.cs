@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-
+    public float maxSpeed;
     private Vector2 wasdInput;
     private Rigidbody playerBody;
 
@@ -42,11 +42,21 @@ public class PlayerMovement : MonoBehaviour
     {
         wasdInput = PlayerInputManager.inputActions.Player.Move.ReadValue<Vector2>();
 
-        playerBody.velocity = new Vector3(wasdInput.x * speed,0, wasdInput.y * speed);
-        playerBody.AddForce(wasdInput * speed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        //Vector3 direction = new Vector3(wasdInput.x * speed, 0, wasdInput.y * speed);
+        Vector3 direction = new Vector3(wasdInput.x , 0, wasdInput.y);
+
+        if(playerBody.velocity.magnitude < maxSpeed)
+        {
+        playerBody.AddForce(direction * speed, ForceMode.Acceleration);
+
+        }
+        
     }
 
-
-
+    
+    public void PlayerIsHit(Vector3 direction)
+    {
+        playerBody.AddForce(direction * 5f, ForceMode.Impulse);
+    }
 
 }
