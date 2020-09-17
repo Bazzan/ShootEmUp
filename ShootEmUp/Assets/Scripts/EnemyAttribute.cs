@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttribute : MonoBehaviour, IKillabel
 {
-    public string PoolTag /*= "Zombie"*/;
+    public string PoolTag;
     public Material hitMaterial;
 
     private EnemyMovement enemyMovement;
@@ -30,7 +30,7 @@ public class EnemyAttribute : MonoBehaviour, IKillabel
     public void Die()
     {
 
-        ObjectPool.Instance.EnQueueInPool("Zombie", gameObject);
+        ObjectPool.Instance.EnQueueInPool(PoolTag, gameObject);
     }
 
     public void TakeDamage(float damage)
@@ -42,7 +42,7 @@ public class EnemyAttribute : MonoBehaviour, IKillabel
             Die();
             return;
         }
-        
+
         enemyMovement.StaggerEnemy();
         StartCoroutine(HitVFX());
     }

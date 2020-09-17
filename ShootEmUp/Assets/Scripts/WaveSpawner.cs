@@ -10,11 +10,16 @@ public class WaveSpawner : MonoBehaviour
     private ObjectPool instance;
 
     public Transform[] spawnTransforms;
+    public int Wave;
 
     private int randomSpawnPoint;
     private GameObject enemyGO;
+    private int totalNumberOfEnemiesSpawned;
+    
     private void Start()
     {
+        Wave = 1;
+        totalNumberOfEnemiesSpawned = 1;
         StartCoroutine(Init());
     }
 
@@ -30,6 +35,17 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int i = 0; i < NumberOfEnemies; i++)
         {
+            if (totalNumberOfEnemiesSpawned % 10 == 0)
+            {
+                Debug.Log("Spawning big gut");
+                randomSpawnPoint = Random.Range(0, 3);
+                enemyGO = instance.SpawnFromPool("BigEnemy", spawnTransforms[randomSpawnPoint].position, Quaternion.identity);
+                enemyGO.GetComponent<EnemyMovement>().OnSpawn();
+            }
+
+
+            totalNumberOfEnemiesSpawned++;
+
             randomSpawnPoint = Random.Range(0, 3);
             enemyGO = instance.SpawnFromPool("Zombie", spawnTransforms[randomSpawnPoint].position, Quaternion.identity);
             enemyGO.GetComponent<EnemyMovement>().OnSpawn();
@@ -43,6 +59,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void UpdateWave()
     {
+        Wave++;
         NumberOfEnemies = Mathf.RoundToInt( NumberOfEnemies * IncreaseNumberOfEnemiesBetweenWaves);
         GameManager.instance.CurrentZombieHealth *= GameManager.instance.healthScaling;
     }

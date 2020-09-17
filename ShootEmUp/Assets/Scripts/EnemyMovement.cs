@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     private Transform agentTransform;
     private Transform playerTransform;
     private Collider enemyCollider;
-
+    private Vector3 directionToPlayer;
     private void Awake()
     {
         
@@ -34,6 +34,16 @@ public class EnemyMovement : MonoBehaviour
         OnSpawn();
     }
 
+    private void LateUpdate()
+    {
+        if (agent.velocity.magnitude > 4f) return;
+        if (!agent.isStopped) return;
+        if (playerTransform == null) return; 
+            transform.LookAt(playerTransform.position, Vector3.up);
+
+    }
+
+
     public void OnSpawn()
     {
         
@@ -45,11 +55,17 @@ public class EnemyMovement : MonoBehaviour
         agent.velocity = Vector3.zero;
     }
 
+    
+
     private IEnumerator CalcPath()
     {
-        agent.SetDestination(playerTransform.position);
+        if (!agent.isStopped)
+        {
+            agent.SetDestination(playerTransform.position);
 
-        yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.3f);
+
+        }
 
         StartCoroutine(CalcPath());
 
