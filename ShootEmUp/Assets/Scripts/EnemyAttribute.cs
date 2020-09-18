@@ -1,29 +1,32 @@
 ﻿
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyAttribute : MonoBehaviour, IKillabel
 {
     public string PoolTag;
     public Material hitMaterial;
-
-    private EnemyMovement enemyMovement;
-    private MeshRenderer meshRenderer;
+    public Material zombieTexture;
     private Material material;
+    
+    private EnemyMovement enemyMovement;
+    private SkinnedMeshRenderer meshRenderer;
 
     private float health;
 
 
     private void Awake()
     {
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
+
+        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         material = meshRenderer.sharedMaterial;
         enemyMovement = GetComponent<EnemyMovement>();
     }
     private void OnEnable()
     {
         health = GameManager.instance.CurrentZombieHealth;
-        meshRenderer.sharedMaterial = material;
+        //meshRenderer.sharedMaterial = material;
     }
 
 
@@ -49,10 +52,12 @@ public class EnemyAttribute : MonoBehaviour, IKillabel
 
     IEnumerator HitVFX()
     {
+        meshRenderer.sharedMaterial = zombieTexture;
 
-        meshRenderer.sharedMaterial = hitMaterial;
+        //meshRenderer.sharedMaterial = hitMaterial;
 
         yield return new WaitForSeconds(0.2f);
+
 
         meshRenderer.sharedMaterial = material;
     }

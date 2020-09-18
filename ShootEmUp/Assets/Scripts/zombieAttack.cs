@@ -61,7 +61,7 @@ public class zombieAttack : MonoBehaviour
      
         if (Physics.SphereCast(zombieTransform.position, radius, transform.forward, out rayHit, 1f, layerMask, QueryTriggerInteraction.Ignore))
         {
-            rayHit.collider.GetComponent<IKillabel>().TakeDamage(Damage);
+            rayHit.collider.GetComponent<PlayerAttribute>().TakeDamage(Damage);
             rayHit.collider.GetComponent<Rigidbody>().AddForce((transform.forward + Vector3.up) * pushBackForce, ForceMode.Impulse);
         }
         enemyMovement.agent.isStopped = false;
