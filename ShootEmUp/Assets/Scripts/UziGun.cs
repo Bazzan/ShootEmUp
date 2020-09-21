@@ -10,7 +10,7 @@ public class UziGun : MonoBehaviour, IWeapon
     public LayerMask LayerMask;
     public LineRenderer LineRenderer;
     public float SpreadAmount;
-
+    public ParticleSystem ParticelVFX;
 
     private float coolDownTimer;
     private Vector3 shotDirection;
@@ -18,8 +18,9 @@ public class UziGun : MonoBehaviour, IWeapon
     private Vector3[] lineRendererPositions = new Vector3[2];
     private Vector3 lineRenderhitPos;
     private Transform playerTransform;
+    private ParticleSystem spawnedParticle;
     Ray ray;
-
+    private EnemyAttribute enemyAttribute;
     private void Awake()
     {
         playerTransform = GameManager.instance.PlayerTransform;
@@ -48,15 +49,17 @@ public class UziGun : MonoBehaviour, IWeapon
         ray.origin = transform.position;
         ray.direction = GetSpreadDirection();
 
-        //shotDirection = GetSpreadDirection();
-        //if (Physics.Raycast(playerTransform.position, shotDirection, out rayHit, Range, layerMask, QueryTriggerInteraction.Ignore))
+
         if (Physics.Raycast(ray, out rayHit, Range, LayerMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderhitPos = rayHit.point;
-            if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
+            if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel ikillabel))
             {
 
-                enemyAttribute.TakeDamage(Damage);
+                enemyAttribute =rayHit.transform.GetComponent<EnemyAttribute>();
+                enemyAttribute.SpawnAndDestroyHitParticels(rayHit);
+
+                ikillabel.TakeDamage(Damage);
             }
         }
         else
@@ -70,6 +73,8 @@ public class UziGun : MonoBehaviour, IWeapon
         coolDownTimer = Time.time + SecondsToShoot;
 
     }
+
+
 
     private Vector3 GetSpreadDirection()
     {

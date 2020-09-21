@@ -7,11 +7,15 @@ public class WaveSpawner : MonoBehaviour
     public float NumberOfEnemies;
     public float TimeBetweenWaves;
     public float IncreaseNumberOfEnemiesBetweenWaves;
-    private ObjectPool instance;
 
     public Transform[] spawnTransforms;
     public int Wave;
 
+    public Transform ParentZombie;
+    public Transform PartenBigZombie;
+
+
+    private ObjectPool instance;
     private int randomSpawnPoint;
     private GameObject enemyGO;
     private int totalNumberOfEnemiesSpawned;
@@ -43,7 +47,7 @@ public class WaveSpawner : MonoBehaviour
                 enemyGO.GetComponent<EnemyMovement>().OnSpawn();
             }
 
-
+            
             totalNumberOfEnemiesSpawned++;
 
             randomSpawnPoint = Random.Range(0, 3);

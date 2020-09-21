@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    
+    
     [SerializeField] private Transform poolLocation;
-    private Dictionary<string, Queue<GameObject>> PoolDictionary;
     [SerializeField] private List<Pool> Pools = default;
+    private Dictionary<string, Queue<GameObject>> PoolDictionary;
+    private Transform parentTransform;
+    private GameObject GameObjectPrefab;
+
 
     [System.Serializable]
     public class Pool
@@ -14,6 +19,7 @@ public class ObjectPool : MonoBehaviour
         public GameObject PoolPrefab;
         [SerializeField] public string PoolTag;
         public int PoolSize;
+        [HideInInspector] public Transform parentTransform;
     }
 
     #region SingeltonInAwake
@@ -54,9 +60,13 @@ public class ObjectPool : MonoBehaviour
             }
             Queue<GameObject> queuePool = new Queue<GameObject>();
 
+
+            GameObject newParentTransform = new GameObject(pool.PoolTag);
+            pool.parentTransform = newParentTransform.transform; 
             for (int i = 0; i < pool.PoolSize; i++)
             {
                 GameObject poolObject = Instantiate(pool.PoolPrefab);
+                poolObject.transform.SetParent(newParentTransform.transform);
                 poolObject.SetActive(false);
                 queuePool.Enqueue(poolObject);
                 Debug.Log("poolTag -> " + pool.PoolTag + " added");
@@ -86,7 +96,6 @@ public class ObjectPool : MonoBehaviour
         objectToSpawn.transform.rotation = rotation;
         objectToSpawn.SetActive(true);
 
-
         return objectToSpawn;
     }
 
@@ -107,10 +116,13 @@ public class ObjectPool : MonoBehaviour
 
     private void AddToEmptyQueue(string poolTag)
     {
-        GameObject prefab = GetObjectToInstansiate(poolTag);
+        GameObjectPrefab = GetObjectToInstansiate(poolTag);
+        parentTransform = getObjectTranform(poolTag);
+
         for (int i = 0; i < 10; i++)
         {
-            GameObject poolObject = Instantiate(prefab);
+            GameObject poolObject = Instantiate(GameObjectPrefab);
+            poolObject.transform.SetParent(parentTransform);
             poolObject.SetActive(false);
             PoolDictionary[poolTag].Enqueue(poolObject);
         }
@@ -130,6 +142,22 @@ public class ObjectPool : MonoBehaviour
         return null;
 
     }
+
+
+    private Transform getObjectTranform(string poolTag)
+    {
+        foreach(Pool pool in Pools)
+        {
+            if (pool.PoolTag.Equals(poolTag))
+            {
+                return pool.parentTransform;
+            }
+        }
+        Debug.Log("Could not find the Transform with PoolTag: " + poolTag);
+        return null;
+    }
+
+
 
 
 }

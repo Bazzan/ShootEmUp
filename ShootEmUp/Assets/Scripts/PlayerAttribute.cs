@@ -3,7 +3,7 @@
 public class PlayerAttribute : MonoBehaviour, IKillabel
 {
     public float Health;
-
+    public bool IsShieldActive = false;
 
 
     public void Die()
@@ -15,6 +15,8 @@ public class PlayerAttribute : MonoBehaviour, IKillabel
 
     public void TakeDamage(float damage)
     {
+        if (IsShieldActive) return;
+
         Health -= damage;
 
         if(Health <= 0f)

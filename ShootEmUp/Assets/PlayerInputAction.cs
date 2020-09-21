@@ -57,6 +57,14 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shield"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f6d529a-6847-420b-8b79-80113c4114fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -310,6 +318,17 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""scoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46f1a40b-2cbf-41e8-84a3-8ec6a85b39b1"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Shield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -892,6 +911,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_WeaponSwitchers = m_Player.FindAction("WeaponSwitchers", throwIfNotFound: true);
         m_Player_scoll = m_Player.FindAction("scoll", throwIfNotFound: true);
+        m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -958,6 +978,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_WeaponSwitchers;
     private readonly InputAction m_Player_scoll;
+    private readonly InputAction m_Player_Shield;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -967,6 +988,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @WeaponSwitchers => m_Wrapper.m_Player_WeaponSwitchers;
         public InputAction @scoll => m_Wrapper.m_Player_scoll;
+        public InputAction @Shield => m_Wrapper.m_Player_Shield;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -991,6 +1013,9 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 @scoll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoll;
                 @scoll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoll;
                 @scoll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoll;
+                @Shield.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShield;
+                @Shield.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShield;
+                @Shield.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShield;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1010,6 +1035,9 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 @scoll.started += instance.OnScoll;
                 @scoll.performed += instance.OnScoll;
                 @scoll.canceled += instance.OnScoll;
+                @Shield.started += instance.OnShield;
+                @Shield.performed += instance.OnShield;
+                @Shield.canceled += instance.OnShield;
             }
         }
     }
@@ -1171,6 +1199,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnWeaponSwitchers(InputAction.CallbackContext context);
         void OnScoll(InputAction.CallbackContext context);
+        void OnShield(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

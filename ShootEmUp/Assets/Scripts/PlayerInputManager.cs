@@ -1,7 +1,5 @@
-﻿using UnityEditor.Rendering;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -11,16 +9,19 @@ public class PlayerInputManager : MonoBehaviour
     public static ShootDelegate shootDelegate;
 
     public WeaponSwitcher weaponSwitcher;
+    public Shield shield;
+    
     private void Awake()
     {
         inputActions = new PlayerInputAction();
-
+        //shield = GameManager.instance.PlayerTransform.GetComponentInChildren<Shield>();
     }
 
     private void OnEnable()
     {
 
         inputActions.Player.WeaponSwitchers.performed += OnSwitchWeapon;
+        inputActions.Player.Shield.performed += OnShieldActivate;
         inputActions.Enable();
     }
 
@@ -52,6 +53,12 @@ public class PlayerInputManager : MonoBehaviour
             weaponSwitcher.SwitchWeapon(2);
         }
 
+    }
+
+    public void OnShieldActivate(InputAction.CallbackContext context)
+    {
+        StartCoroutine(shield.ActivateShield());
+           
     }
 
 

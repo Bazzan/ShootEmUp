@@ -85,7 +85,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoolTag: Zombie
   hitMaterial: {fileID: 2100000, guid: 3c9ce652521b8f84fb83e7ef102868fc, type: 2}
-  zombieTexture: {fileID: 2100000, guid: 94572613ceb5d3345b4a638c7dc14cbe, type: 2}
+  zombieHitTexture: {fileID: 2100000, guid: 94572613ceb5d3345b4a638c7dc14cbe, type: 2}
+  HitParticelVFX: {fileID: 4189208482351846629, guid: 4182ed6cb2564bd429b0c11b7a2b560a,
+    type: 3}
+  timeToDestryParticles: 4
 --- !u!114 &2144550512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +119,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1271126431596640158
 PrefabInstance:
