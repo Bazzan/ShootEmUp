@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 6920393542920049873}
   - component: {fileID: 6920393542920049874}
   - component: {fileID: 6577604936293657502}
+  - component: {fileID: 551390364}
   - component: {fileID: 6577604936293657503}
   m_Layer: 8
   m_Name: BigEnemy
@@ -100,7 +101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6920393542920049872
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +172,21 @@ MonoBehaviour:
   HitParticelVFX: {fileID: 4189208482351846629, guid: 4182ed6cb2564bd429b0c11b7a2b560a,
     type: 3}
   timeToDestryParticles: 4
+--- !u!114 &551390364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6920393542920049875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf29a57eb39bac478e5f82d6e0c9dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponPackPrefab: {fileID: 2957235899926774773, guid: 5dee6be47a06cf6459540807204ed564,
+    type: 3}
+  procentToDroppGun: 50
 --- !u!65 &6577604936293657503
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class PlayerAttribute : MonoBehaviour, IKillabel
 
     public void Die()
     {
+        GameManager.instance.OnPausGame();
         gameObject.SetActive(false);    
 
 

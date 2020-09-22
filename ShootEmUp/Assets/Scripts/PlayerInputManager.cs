@@ -22,6 +22,8 @@ public class PlayerInputManager : MonoBehaviour
 
         inputActions.Player.WeaponSwitchers.performed += OnSwitchWeapon;
         inputActions.Player.Shield.performed += OnShieldActivate;
+        inputActions.Player.Pause.performed += OnPauseGame;
+
         inputActions.Enable();
     }
 
@@ -61,7 +63,10 @@ public class PlayerInputManager : MonoBehaviour
            
     }
 
-
+    public void OnPauseGame(InputAction.CallbackContext context)
+    {
+        GameManager.instance.OnPausGame();
+    }
 
 
 }

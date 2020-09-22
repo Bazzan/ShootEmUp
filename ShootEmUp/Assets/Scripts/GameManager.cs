@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-100)]
 public class GameManager : MonoBehaviour
@@ -16,10 +17,15 @@ public class GameManager : MonoBehaviour
     public float healthScaling;
     public float CurrentZombieHealth;
 
+    [Header("UI")]
+    public Canvas canvas;
 
 
     private void Awake()
     {
+
+
+
         if (instance != null)
         {
 
@@ -29,6 +35,9 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+        OnPausGame();
+
+
         PlayerCamera = Camera.main;
         PlayerCameraTransform = PlayerCamera.transform;
 
@@ -36,6 +45,29 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+
+    public void OnPausGame()
+    {
+        Time.timeScale = 0;
+        canvas.enabled = true;
+
+    }
+
+    public void OnResumeGame()
+    {
+        Time.timeScale = 1;
+        canvas.enabled = false;
+
+    }
+
+
+    public void OnReloadLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+
 
 
 }

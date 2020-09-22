@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/TopDownGunPack/Scenes/Demo Scene.unity
+  - enabled: 0
+    path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/ShootEmUp.unity
+    guid: 7a3851038c507cb4e8bcdf0dae8b89e3
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ff95dbdfcbf55c642b2288430a6b7947,
       type: 2}

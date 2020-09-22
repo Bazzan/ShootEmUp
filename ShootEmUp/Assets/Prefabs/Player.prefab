@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 292711724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 518934925}
   m_RootOrder: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   ShieldDuration: 3
   ShieldCooldown: 5
   PlayerSizeMultiplier: 1.5
-  ShieldMaterial: {fileID: 0}
+  ShieldMaterial: {fileID: 2100000, guid: 9af483b1b96ab614487ea68a2a7021be, type: 2}
 --- !u!1 &816499169
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &816499170
 Transform:
   m_ObjectHideFlags: 0
@@ -536,6 +536,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 083579e0-21a4-48e2-84a9-bf02e9269445
     m_ActionName: Player/scoll[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2f6d529a-6847-420b-8b79-80113c4114fa
+    m_ActionName: Player/Shield[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bf0562d7-8b73-4620-8a1d-eafa6f872adc
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -796,7 +804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4245359448435686843
 Transform:
   m_ObjectHideFlags: 0
