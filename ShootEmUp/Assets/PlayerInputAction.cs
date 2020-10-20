@@ -73,6 +73,14 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Grenade"",
+                    ""type"": ""Button"",
+                    ""id"": ""592534ac-597c-4fc1-b7d1-7feb96fc3a6b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -348,6 +356,17 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd8120de-7918-4606-b1dc-17cd6ffd800d"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Grenade"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -932,6 +951,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         m_Player_scoll = m_Player.FindAction("scoll", throwIfNotFound: true);
         m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Grenade = m_Player.FindAction("Grenade", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1000,6 +1020,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_scoll;
     private readonly InputAction m_Player_Shield;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Grenade;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -1011,6 +1032,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         public InputAction @scoll => m_Wrapper.m_Player_scoll;
         public InputAction @Shield => m_Wrapper.m_Player_Shield;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Grenade => m_Wrapper.m_Player_Grenade;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1041,6 +1063,9 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Grenade.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrenade;
+                @Grenade.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrenade;
+                @Grenade.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrenade;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1066,6 +1091,9 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Grenade.started += instance.OnGrenade;
+                @Grenade.performed += instance.OnGrenade;
+                @Grenade.canceled += instance.OnGrenade;
             }
         }
     }
@@ -1229,6 +1257,7 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
         void OnScoll(InputAction.CallbackContext context);
         void OnShield(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnGrenade(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -35,20 +35,17 @@ public class PlayerMovement : MonoBehaviour
 
         degreesToRotate = Mathf.Atan2(lookDirection.x, lookDirection.y) * Mathf.Rad2Deg;
         playerBody.MoveRotation(Quaternion.Euler(0, degreesToRotate ,0));
-        
     }
 
     private void Move()
     {
         wasdInput = PlayerInputManager.inputActions.Player.Move.ReadValue<Vector2>();
 
-        //Vector3 direction = new Vector3(wasdInput.x * speed, 0, wasdInput.y * speed);
         Vector3 direction = new Vector3(wasdInput.x , 0, wasdInput.y);
 
         if(playerBody.velocity.magnitude < maxSpeed)
         {
         playerBody.AddForce(direction * speed, ForceMode.Acceleration);
-
         }
         
     }

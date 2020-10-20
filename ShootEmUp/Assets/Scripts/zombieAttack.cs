@@ -20,10 +20,7 @@ public class zombieAttack : MonoBehaviour
         enemyMovement = GetComponent<EnemyMovement>();
         zombieTransform = transform;
     }
-    private void Start()
-    {
 
-    }
 
     private void OnEnable()
     {

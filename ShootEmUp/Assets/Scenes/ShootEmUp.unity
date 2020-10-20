@@ -2762,6 +2762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSwitcher: {fileID: 1827027461}
   shield: {fileID: 518934926}
+  grenade: {fileID: 781471017}
 --- !u!1001 &536878669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3851,6 +3852,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 775705603}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &781471017 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 781471017, guid: e9c5fabb9422e3f41b20a2997c36bc2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5355873759679742961}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd05a2bb4e1b7c4f9bbdf40ffaa8642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &788074625
 PrefabInstance:
   m_ObjectHideFlags: 0

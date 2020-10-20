@@ -147,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &816499170
 Transform:
   m_ObjectHideFlags: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   LineRenderer: {fileID: 643898203}
-  SpreadAmount: 0.15
+  SpreadAmount: 5
   ParticelVFX: {fileID: 0}
 --- !u!1 &2169339792388037729
 GameObject:
@@ -243,6 +243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5921923109344827787}
   - component: {fileID: 1827027461}
+  - component: {fileID: 781471017}
   m_Layer: 11
   m_Name: Weapons
   m_TagString: Untagged
@@ -278,6 +279,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed3f11b6d6909f468eec75a08e65edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasUziWeapon: 0
+--- !u!114 &781471017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169339792388037729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd05a2bb4e1b7c4f9bbdf40ffaa8642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grenadePrefab: {fileID: 4306588787377493283, guid: dbd282a1975d07e47a8d0df24eb9f8d5,
+    type: 3}
+  throwLength: 12.5
+  throwHight: 2
+  throwCooldown: 4
 --- !u!120 &643898203
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -544,6 +563,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: bf0562d7-8b73-4620-8a1d-eafa6f872adc
     m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 592534ac-597c-4fc1-b7d1-7feb96fc3a6b
+    m_ActionName: Player/Grenade[/Keyboard/g]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -804,7 +827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4245359448435686843
 Transform:
   m_ObjectHideFlags: 0

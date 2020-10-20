@@ -10,7 +10,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public WeaponSwitcher weaponSwitcher;
     public Shield shield;
-    
+    public GrenadeThrower grenade;
     private void Awake()
     {
         inputActions = new PlayerInputAction();
@@ -19,11 +19,10 @@ public class PlayerInputManager : MonoBehaviour
 
     private void OnEnable()
     {
-
+        inputActions.Player.Grenade.performed += OnThrowGrenade;
         inputActions.Player.WeaponSwitchers.performed += OnSwitchWeapon;
         inputActions.Player.Shield.performed += OnShieldActivate;
         inputActions.Player.Pause.performed += OnPauseGame;
-
         inputActions.Enable();
     }
 
@@ -35,13 +34,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
-
-
-        //Debug.Log(inputActions.Player.Fire.ReadValue<float>());
         if (inputActions.Player.Fire.ReadValue<float>() == 0) return;
-        
-        shootDelegate();
 
+        shootDelegate();
     }
 
     public void OnSwitchWeapon(InputAction.CallbackContext context)
@@ -57,10 +52,14 @@ public class PlayerInputManager : MonoBehaviour
 
     }
 
+    public void OnThrowGrenade(InputAction.CallbackContext context)
+    {
+        grenade.ThrowGrenade();
+    }
     public void OnShieldActivate(InputAction.CallbackContext context)
     {
         StartCoroutine(shield.ActivateShield());
-           
+
     }
 
     public void OnPauseGame(InputAction.CallbackContext context)

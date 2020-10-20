@@ -25,7 +25,6 @@ public class UziGun : MonoBehaviour, IWeapon
     {
         playerTransform = GameManager.instance.PlayerTransform;
         coolDownTimer = 0f;
-
     }
 
     private void OnEnable()
@@ -45,11 +44,8 @@ public class UziGun : MonoBehaviour, IWeapon
     {
         if (Time.time < coolDownTimer) return;
 
-
         ray.origin = transform.position;
         ray.direction = GetSpreadDirection();
-
-
         if (Physics.Raycast(ray, out rayHit, Range, LayerMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderhitPos = rayHit.point;
@@ -66,25 +62,22 @@ public class UziGun : MonoBehaviour, IWeapon
         {
             lineRenderhitPos = ray.GetPoint(Range);
         }
-
         LineRendererEffect(lineRenderhitPos);
 
-
         coolDownTimer = Time.time + SecondsToShoot;
-
     }
 
 
 
     private Vector3 GetSpreadDirection()
     {
+        float spreadAngel = Random.Range(-SpreadAmount, SpreadAmount) / 2f ;
+        float xAngel = Mathf.Tan(spreadAngel * Mathf.Deg2Rad);
 
-        float Spread = Random.Range(-SpreadAmount, SpreadAmount);
+        Vector3 bulletDirection = transform.forward;
+        bulletDirection.x += xAngel;
 
-        Vector3 dir = transform.forward;
-        dir.x += Spread;
-        dir.z += Spread;
-        return dir;
+        return bulletDirection;
     }
 
 
@@ -111,5 +104,6 @@ public class UziGun : MonoBehaviour, IWeapon
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, shotDirection * Range);
+        Gizmos.DrawRay(transform.position, GetSpreadDirection());
     }
 }
