@@ -48,6 +48,10 @@ public class PlayerInputManager : MonoBehaviour
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             weaponSwitcher.SwitchWeapon(2);
+        }else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            weaponSwitcher.SwitchWeapon(3);
+            
         }
 
     }

@@ -328,6 +328,17 @@ public class @PlayerInputAction : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""4f88445d-8a1e-41bd-a45e-2e66b329a94f"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""WeaponSwitchers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a0e29b63-8e8e-4340-8485-6e5ade42dd60"",
                     ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",

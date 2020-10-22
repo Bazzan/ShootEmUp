@@ -12,6 +12,8 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float explosionRadius;
     [SerializeField] private float explosionPushback;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private ParticleSystem explotionVFX;
+
     private Collider[] enemyColliders;
     private Rigidbody grenadeBody;
 
@@ -25,7 +27,6 @@ public class Grenade : MonoBehaviour
     {
         StartCoroutine(Explode());
         grenadeBody.velocity *= 0.5f;
-        //grenadeBody.AddForce(Vector3.up *2, ForceMode.Impulse);
     }
 
     private IEnumerator Explode()
@@ -33,15 +34,20 @@ public class Grenade : MonoBehaviour
 
 
         yield return new WaitForSeconds(timeToExplode);
+        
+        ParticleSystem particleSystem = Instantiate(explotionVFX, transform.position,Quaternion.identity);
+        Destroy(particleSystem.gameObject, 1.5f);
+        particleSystem.Play();
 
         enemyColliders = Physics.OverlapSphere(transform.position, explosionRadius, layerMask);
 
         for (int i = 0; i < enemyColliders.Length; i++)
         {
-            enemyColliders[i].GetComponent<EnemyAttribute>().TakeDamage(damage);
+            enemyColliders[i].GetComponent<IKillabel>().TakeDamage(damage);
             Vector3 pushbackDirection = enemyColliders[i].transform.position - transform.position;
 
-            enemyColliders[i].GetComponent<NavMeshAgent>().velocity = (pushbackDirection.normalized * 4) + (Vector3.up * 2f);
+            enemyColliders[i].GetComponent<NavMeshAgent>().velocity = 
+                (pushbackDirection.normalized * 4) + (Vector3.up * 2f);
         }
         grenadeBody.velocity = Vector3.zero;
 
