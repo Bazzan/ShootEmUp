@@ -127,9 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4060927cb7b2b94180b5fe1d4880ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketLauncher: {fileID: 0}
   Damage: 111
-  pushback: 0
+  pushback: 5
   explotionRaidus: 3
   travelSpeed: 15
   explotionVFX: {fileID: 3596618010788178565, guid: 06b5dd7a37e62a248a24a7d6ae920577,

@@ -98,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrenadeThrower: {fileID: 0}
   timeToExplode: 1.5
-  damage: 0
+  damage: 100
   explosionRadius: 3
-  explosionPushback: 0
+  explosionPushback: 5
   layerMask:
     serializedVersion: 2
     m_Bits: 256

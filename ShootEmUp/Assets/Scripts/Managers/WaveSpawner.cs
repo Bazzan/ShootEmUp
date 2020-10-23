@@ -41,7 +41,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (totalNumberOfEnemiesSpawned % 10 == 0)
             {
-                Debug.Log("Spawning big gut");
+
                 randomSpawnPoint = Random.Range(0, 3);
                 enemyGO = instance.SpawnFromPool("BigEnemy", spawnTransforms[randomSpawnPoint].position, Quaternion.identity);
                 enemyGO.GetComponent<EnemyMovement>().OnSpawn();

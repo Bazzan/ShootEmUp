@@ -1,22 +1,20 @@
 ﻿using System.Collections;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Rocket : MonoBehaviour
 {
-    [HideInInspector] public RocketLauncher rocketLauncher;
+    [HideInInspector] private RocketLauncher rocketLauncher;
 
     [SerializeField] private float Damage;
     [SerializeField] private float pushback;
     [SerializeField] private float explotionRaidus;
     [SerializeField] private float travelSpeed;
 
-    [SerializeField] private ParticleSystem explotionVFX;
-    [SerializeField] private LayerMask damageableLayerMask;
-    private Collider collider;
-    private Rigidbody rocketBody;
-    private Vector3 shootDirection;
+    [SerializeField] private ParticleSystem explotionVFX = default;
+    [SerializeField] private LayerMask damageableLayerMask = default;
+    private Collider collider = default;
+    private Rigidbody rocketBody = default;
     private Collider[] damageableColliders;
 
     private void Awake()
@@ -32,19 +30,16 @@ public class Rocket : MonoBehaviour
     {
         rocketBody.MovePosition(transform.position + (transform.forward * travelSpeed * Time.deltaTime));
     }
-
     public void SetPositionAndRotation(Vector3 position, Quaternion direction)
     {
         transform.position = position;
         transform.rotation = direction;
     }
-
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(Explode());
+        Explode();
     }
-
-    private IEnumerator Explode()
+    private void Explode()
     {
         ParticleSystem vfx = Instantiate(explotionVFX, transform.position, Quaternion.identity);
         Destroy(vfx.gameObject, 1.5f);
@@ -52,16 +47,16 @@ public class Rocket : MonoBehaviour
 
         damageableColliders = Physics.OverlapSphere(transform.position, explotionRaidus, damageableLayerMask);
 
-        rocketLauncher.DeActivateRocket(gameObject);
-        if (damageableColliders.Length == 0) yield break;
-
         for (int i = 0; i < damageableColliders.Length; i++)
         {
-            damageableColliders[i].GetComponent<IKillabel>().TakeDamage(Damage);
+            Collider collider = damageableColliders[i];
+            collider.GetComponent<IDamage>().TakeDamage(Damage);
             Vector3 pushbackDirection = damageableColliders[i].transform.position - transform.position;
-            damageableColliders[i].GetComponent<NavMeshAgent>().velocity = (pushbackDirection.normalized * pushback) + Vector3.up * 2f;
+            pushbackDirection.y = 0f;
+            collider.GetComponent<IStagger>().Stagger(StaggerType.Pushback, (pushbackDirection.normalized * pushback) + (Vector3.up * 3));
         }
-
+        RocketLauncher.DeActivateRocket(gameObject);
+        
     }
 
 
@@ -70,7 +65,4 @@ public class Rocket : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explotionRaidus);
     }
-
-
-
 }

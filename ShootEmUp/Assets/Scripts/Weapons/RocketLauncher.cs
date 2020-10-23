@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class RocketLauncher : MonoBehaviour, IWeapon
 {
+    [HideInInspector] public static Queue<GameObject> rocketQueue = new Queue<GameObject>();
+
     [SerializeField] private float numberOfRocketsStored;
     [SerializeField] private float cooldownToShoot;
     [SerializeField] private GameObject rocketPrefab;
-    [SerializeField]  private Queue<GameObject> rocketQueue = new Queue<GameObject>();
     private GameObject rocketToShoot;
     private Rocket rocket;
     private float cachedTime;
@@ -20,9 +20,6 @@ public class RocketLauncher : MonoBehaviour, IWeapon
     {
         PlayerInputManager.shootDelegate -= Shoot;
     }
-
-
-
     private void Start()
     {
         cachedTime = Time.time;
@@ -30,13 +27,11 @@ public class RocketLauncher : MonoBehaviour, IWeapon
         for (int i = 0; i < numberOfRocketsStored; i++)
         {
             GameObject prefab = Instantiate(rocketPrefab, transform.position, Quaternion.identity);
-            prefab.GetComponent<Rocket>().rocketLauncher = this;
+            //prefab.GetComponent<Rocket>().rocketLauncher = this;
             prefab.SetActive(false);
             rocketQueue.Enqueue(prefab);        
         }    
     }
-
-
     public void Shoot()
     {
         if (cachedTime > Time.time) return;
@@ -44,16 +39,14 @@ public class RocketLauncher : MonoBehaviour, IWeapon
         
 
         rocketToShoot = rocketQueue.Dequeue();
-        rocketToShoot.gameObject.SetActive(true);
         rocket = rocketToShoot.GetComponent<Rocket>();
 
         rocket.SetPositionAndRotation(transform.position + transform.forward, transform.rotation);
+        rocketToShoot.gameObject.SetActive(true);
         //rocket.MoveProjectile();
 
     }
-
-
-    public void DeActivateRocket(GameObject rocket)
+    public static void DeActivateRocket(GameObject rocket)
     {
         rocketQueue.Enqueue(rocket);
         rocket.SetActive(false);   

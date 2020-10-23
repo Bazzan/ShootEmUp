@@ -49,13 +49,15 @@ public class UziGun : MonoBehaviour, IWeapon
         if (Physics.Raycast(ray, out rayHit, Range, LayerMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderhitPos = rayHit.point;
-            if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel ikillabel))
+            if (rayHit.collider.TryGetComponent<IDamage>(out IDamage ikillabel))
             {
-
                 enemyAttribute =rayHit.transform.GetComponent<EnemyAttribute>();
                 enemyAttribute.SpawnAndDestroyHitParticels(rayHit);
 
                 ikillabel.TakeDamage(Damage);
+                
+                if(rayHit.collider.TryGetComponent<IStagger>(out IStagger istagger))
+                    istagger.Stagger(StaggerType.Stagger, Vector3.zero);
             }
         }
         else

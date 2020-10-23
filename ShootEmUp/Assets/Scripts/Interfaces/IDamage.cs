@@ -1,11 +1,8 @@
 ﻿
-public interface IKillabel
+public interface IDamage
 {
-
     void TakeDamage(float damage);
 
     void Die();
-
-
 
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IStagger
 {
     public float speed;
     public float maxSpeed;
@@ -56,4 +56,11 @@ public class PlayerMovement : MonoBehaviour
         playerBody.AddForce(direction * 5f, ForceMode.Impulse);
     }
 
+    public void Stagger(StaggerType staggerType, Vector3 force)
+    {
+        if (staggerType == StaggerType.Stagger)
+            playerBody.velocity = Vector3.zero;
+        else if (staggerType == StaggerType.Pushback)
+            playerBody.AddForce(force, ForceMode.Impulse);
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class EnemyAttribute : MonoBehaviour, IKillabel
+public class EnemyAttribute : MonoBehaviour, IDamage
 {
     public string PoolTag;
     public Material hitMaterial;
@@ -17,6 +17,7 @@ public class EnemyAttribute : MonoBehaviour, IKillabel
     private MeshRenderer meshRenderer;
     private float health;
     private ParticleSystem spawnedParticle;
+    private EnemyMovement.EnemyStaggerType enemyStaggerType;
 
     private void Awake()
     {
@@ -54,7 +55,6 @@ public class EnemyAttribute : MonoBehaviour, IKillabel
             return;
         }
 
-        enemyMovement.StaggerEnemy();
         StartCoroutine(HitVFX());
     }
 

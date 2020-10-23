@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
 
-public class PlayerAttribute : MonoBehaviour, IKillabel
+public class PlayerAttribute : MonoBehaviour, IDamage
 {
     public float Health;
     public bool IsShieldActive = false;
-
-
+    
     public void Die()
     {
         GameManager.instance.OnPausGame();
         gameObject.SetActive(false);    
-
-
     }
-
     public void TakeDamage(float damage)
     {
         if (IsShieldActive) return;
@@ -24,8 +20,5 @@ public class PlayerAttribute : MonoBehaviour, IKillabel
         {
             Die();
         }
-
     }
-
-
 }

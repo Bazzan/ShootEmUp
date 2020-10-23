@@ -21,8 +21,6 @@ public class Grenade : MonoBehaviour
     {
         grenadeBody = GetComponent<Rigidbody>();
     }
-
-
     private void OnCollisionEnter(Collision collision)
     {
         StartCoroutine(Explode());
@@ -31,8 +29,6 @@ public class Grenade : MonoBehaviour
 
     private IEnumerator Explode()
     {
-
-
         yield return new WaitForSeconds(timeToExplode);
         
         ParticleSystem particleSystem = Instantiate(explotionVFX, transform.position,Quaternion.identity);
@@ -43,16 +39,23 @@ public class Grenade : MonoBehaviour
 
         for (int i = 0; i < enemyColliders.Length; i++)
         {
-            enemyColliders[i].GetComponent<IKillabel>().TakeDamage(damage);
+            Collider collider = enemyColliders[i];
+            collider.GetComponent<IDamage>().TakeDamage(damage);
             Vector3 pushbackDirection = enemyColliders[i].transform.position - transform.position;
 
-            enemyColliders[i].GetComponent<NavMeshAgent>().velocity = 
-                (pushbackDirection.normalized * 4) + (Vector3.up * 2f);
+            collider.TryGetComponent<IStagger>(out IStagger istagger);
+            istagger.Stagger(StaggerType.Pushback ,(pushbackDirection.normalized * explosionPushback) + (Vector3.up * 3f));
         }
         grenadeBody.velocity = Vector3.zero;
 
         gameObject.SetActive(false);
-
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
 
 }

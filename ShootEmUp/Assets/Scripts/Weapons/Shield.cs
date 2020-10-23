@@ -17,7 +17,7 @@ public class Shield : MonoBehaviour
     private GameObject MeshGO;
     private Vector3 normalScale;
     private MeshRenderer meshRenderer;
-    private CapsuleCollider collider;
+    private CapsuleCollider collider = default;
     private float initialColliderRaidus;
 
 

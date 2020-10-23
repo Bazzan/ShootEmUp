@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour, IStagger
 {
 
     public NavMeshAgent agent;
@@ -10,9 +10,15 @@ public class EnemyMovement : MonoBehaviour
     private Transform playerTransform;
     private Collider enemyCollider;
     private Vector3 directionToPlayer;
+
+    public enum EnemyStaggerType{
+        Stagger, 
+        Pushback
+    }
+
     private void Awake()
     {
-
+        EnemyStaggerType currentStaggerType;
         agent = GetComponent<NavMeshAgent>();
         agentTransform = agent.transform;
         playerTransform = GameManager.instance.PlayerTransform;
@@ -50,10 +56,7 @@ public class EnemyMovement : MonoBehaviour
         StartCoroutine(CalcPath());
     }
 
-    public void StaggerEnemy()
-    {
-        agent.velocity = Vector3.zero;
-    }
+
 
 
 
@@ -71,6 +74,12 @@ public class EnemyMovement : MonoBehaviour
 
     }
 
+    public void Stagger(StaggerType staggerType, Vector3 force)
+    {
+        if (staggerType == StaggerType.Stagger)
+            agent.velocity = Vector3.zero;
+        else if (staggerType == StaggerType.Pushback)
+            agent.velocity = force;
 
-
+    }
 }

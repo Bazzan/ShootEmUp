@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+
 public class HandGun : MonoBehaviour, IWeapon
 {
 
@@ -52,20 +54,22 @@ public class HandGun : MonoBehaviour, IWeapon
         {
             Debug.Log("hit");
             lineRenderhitPos = rayHit.point;
-            if (rayHit.collider.TryGetComponent<IKillabel>(out IKillabel enemyAttribute))
+            if (rayHit.collider.TryGetComponent<IDamage>(out IDamage Idamageable))
             {
-                enemyAttribute.TakeDamage(Damage);
+                rayHit.collider.GetComponent<EnemyAttribute>().SpawnAndDestroyHitParticels(rayHit);
+                Idamageable.TakeDamage(Damage);
+
+                rayHit.collider.TryGetComponent<IStagger>(out IStagger Istagger);
+                Istagger.Stagger(StaggerType.Stagger, Vector3.zero);
             }
         }
         else
         {
             lineRenderhitPos = ray.GetPoint(Range);
-
         }
         LineRendererEffect(lineRenderhitPos);
         coolDownTimer = Time.time + SecondsToShoot;
     }
-
 
 
     private void LineRendererEffect(Vector3 hitPosition)
